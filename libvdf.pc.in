@@ -1,0 +1,14 @@
+# libvdf pkg-config source file
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libvud
+Description: Virtual Dynamic FAT
+Version: @VERSION@
+Requires:
+Conflicts:
+Libs: -L${libdir} -lvdf
+Cflags: -I${includedir}

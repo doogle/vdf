@@ -1,0 +1,93 @@
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# Normal rules
+#
+
+*.rej
+*.orig
+*.a
+*.la
+*.o
+*.lo
+*.so
+*.so.*
+*~
+*.swp
+*.patch
+*.log
+# Don't add any test disk image files
+*.img
+# Build file for private use
+htc.pkg
+
+!extra/*.patch
+
+#
+# Top-level generic files
+#
+
+#
+# Generated files
+#
+
+*.o
+*.lo
+*.swp
+*.m4
+compile
+.deps/
+.libs
+m4/
+autom4te.cache/
+INSTALL
+Makefile
+Makefile.in
+config.h
+config.h.in
+config.log
+config.status
+config.sub
+config.guess
+configure
+libtool
+aclocal.m4
+ltmain.sh
+install-sh
+depcomp
+missing
+stamp-h1
+config.log
+config.status
+examples/cddb_query
+mkinstalldirs
+*.pc
+intl/
+po/
+
+libvdf/libvdf.sym
+examples/create_drive
+examples/vdf_stream
+examples/vdf_stream2
+
+# stgit generated dirs
+patches-*
+.stgit-edit.txt
+
+# quilt's files
+patches
+series
+
+# gdb files
+.gdb_history
+
+# cscope files
+cscope.*
+
+# tags files
+/tags
+/ctags
+/etags
+

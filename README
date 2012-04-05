@@ -1,0 +1,93 @@
+VDF README
+==========
+
+VDF is the Virtual Dynamic FAT library. It allows you to define a filesystem
+hierachy in memory and then serve that up as a FAT filesystem, without having
+to create a full disk image. Metadata such as the boot sector, FAT and directory
+entries are generated as needed and file data is read off disk or provided via
+callbacks.
+
+Once the virtual drive has been defined, a 'transport driver' is used to serve
+up the virtual image. Currently, drivers exist for the Linux Network Block
+Device (NBD). In future, a VDF specific protocol will be implemented and a
+hardware device is planned (based around the PIC32 Ethernet Starter Kit) to act
+as a remote Mass Storage Device that can talk to VDF. Other drivers can be added
+into the library or sufficient APIs exist to implement a custom driver outside
+of the library.
+If needed, the entire image can also be written out to a file.
+
+The library supports creating FAT12, FAT16 and FAT32 filesystems. Any historical
+quirks are generally unimplemented but this shouldn't affect compatibility.
+Long file name (VFAT) support is implemented but the user should be aware that
+this may raise patent issues.
+
+This is an initial release and is still a bit rough around the edges. Feedback
+is very welcome and any help would be good (especially with autotools stuff as
+I haven't got much experience with this).
+
+Building has been tested under Ubuntu 11.10 (x86 and ARM), Cygwin and with
+MS Visual Studio 2008.
+
+
+BUILDING
+--------
+
+Building and installation instructions can be found in INSTALL. But brief
+instructions follow:
+
+- if you do not have ./configure, run ./autogen.sh to generate the needed files.
+  this will be needed if building from the gi repository.
+
+- check output of ./configure --help to see if any options apply to you
+
+- run
+  ./configure
+  make
+
+  to build libvdf and the provided examples.
+
+- to install the library, run
+  make install
+
+  optionally, DESTDIR can passed in on the the make install command line to
+  specify a destination directory
+
+
+NBD tools
+-------------
+
+To use the NBD drivers in VDF, you will want to install the nbd tools. These 
+can be downloaded from http://nbd.sourceforge.net/
+The standard NBD tools operate in with a client-server model, where the server
+is the tool providing the image file and the client is the tool that connects to
+the server and configures the NBD device.
+The NBD server transport driver in VDF functions in the same way and will work
+with nbd-client. However, to enable the initiation to be performed from the
+other end, VDF provides a NBD client transport driver. Once a connection is
+made, the protocol functions in the same way; although rather than provide a
+server socket, the NBD client will connect to what I've called the
+nbd-devserver. A patch that can be applied to nbd-3.0 has been provided in the
+'extra' directory. This will provide the nbd-devserver utility. It operates in
+much the same way as nbd-client, except it will provide a server socket that
+allows a single connection at a time.
+Command line options have been added to allow a shell line to be executed when
+a connection is made or dropped. One possibility is using this to run modprobe
+and rmmod respectively to add and remove the g_file_storage kernel module in
+order to provide a virtualised USB Mass Storage Device (which is the original
+reason that VDF was written).
+
+
+API
+---
+
+API documentation is not yet provided. A few simple examples are provided to
+demonstrate how the API can be used.
+
+
+LICENSING
+---------
+
+VDF is copyright (C) 2012 David Steinberg and is provided under the GNU GPL V3.
+VDF comes with ABSOLUTELY NO WARRANTY.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

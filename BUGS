@@ -1,0 +1,13 @@
+2012-05-04		0.0.1
+
+  Drive size calculations and filesystem type detection sometimes gets things
+    wrong.
+
+  Drives with sizes > 2^32 needs testing and doesn't seem to work fully.
+
+  The sector/cluster offset and size types aren't always used where they should
+    be.
+
+  Autotools stuff is probably a bit wrong. Ie. config.h isn't really used.
+
+  No big-endian support yet.

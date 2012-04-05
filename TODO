@@ -1,0 +1,59 @@
+
+API documentation
+
+
+Structure to be passed to vud_read_sector()/vud_read_sectors() to store lookup
+data for speedier access.
+
+
+int vud_suggest(vud_drive *drv, off_t sector, off_t *sectors, size_t count);
+  Maintain last data/dir sector and fat sector, as well as pointers to data
+  structures.
+  Use data sector delta to predict next data sector or fat sector, including
+  file boundaries within a directory
+
+
+Extra methods of interacting with transport drivers to allow interogating of
+internal state. This is especially needed for NBD server.
+
+
+Make sure filenames aren't too long.
+
+
+Special dynamic metadata mode. Allows filename, size and attribute changes even
+when drive is locked. When LFNs are enabled, all directory entries will need
+to be padded to maximum length.
+
+
+Copy-On-Write
+
+
+Post-unlock, allow COW changed sectors to be applied back to the filesystem to
+modify on-disk files, perform writes using callbacks and modify directory
+structure.
+
+
+Finish clusterlist implementation. This will allow non-contiguous files to exist,
+which will then allow filesystem writing support to be implemented.
+
+
+Real-time filesystem writing support.
+ - On FAT writes, will need to lookup which file's cluster chain is being modified.
+ - On directory entry writes, will need to either modify or delete file/dir entries.
+ - On file data writes, will need to write changes to disk or use callback.
+
+
+ARM optimisation: use bitshift instead of divide when converting offset to
+sector/cluster number.
+
+
+Should VFAT support be a compile time option as well as run-time because of
+patent issues?
+
+
+Automatic drive size: Total size (and possibly therefore filesystem type) is
+calculated when needed. This would be a vdf_drive_create() flag.
+
+
+Multiple partition support for one drive.
+
